@@ -19,9 +19,7 @@ pipeline {
 stage('Test') {
     steps {
         sh '''
-                    #!/bin/bash
-            set -o pipefail
-            npm run test123 2>&1 | tee pipeline.log
+           /bin/bash -c 'npm run test123 2>&1 | tee pipeline.log'
         '''
     }
 }
