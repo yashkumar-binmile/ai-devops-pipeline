@@ -16,13 +16,18 @@ pipeline {
             }
         }
 
-stage('Test') {
-    steps {
-        sh '''
-           /bin/bash -c 'npm run test123 2>&1 | tee pipeline.log'
-        '''
-    }
-}
+        stage('Test') {
+            steps {
+                sh '''
+                    npm run test123 > pipeline.log 2>&1
+                    TEST_STATUS=$?
+
+                    cat pipeline.log
+
+                    exit $TEST_STATUS
+                '''
+            }
+        }
 
         stage('Docker Build') {
             steps {
@@ -35,6 +40,10 @@ stage('Test') {
 
         failure {
 
+            echo '======================================'
+            echo 'Pipeline failed - starting AI analysis'
+            echo '======================================'
+
             withCredentials([
                 string(
                     credentialsId: 'groq-api-key',
@@ -43,9 +52,17 @@ stage('Test') {
             ]) {
 
                 sh '''
+                    echo "Running AI analysis..."
+
+                    python3 --version
+
                     python3 ai_analyze.py
                 '''
             }
+        }
+
+        success {
+            echo 'Pipeline completed successfully.'
         }
     }
 }
