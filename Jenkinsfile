@@ -19,7 +19,7 @@ pipeline {
 stage('Test') {
     steps {
         sh '''
-            npm test 2>&1 | tee pipeline.log
+            npm run test123 2>&1 | tee pipeline.log
         '''
     }
 }
