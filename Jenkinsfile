@@ -16,14 +16,13 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh '''
-                    set -o pipefail
-                    npm test 2>&1 | tee pipeline.log
-                '''
-            }
-        }
+stage('Test') {
+    steps {
+        sh '''
+            npm test 2>&1 | tee pipeline.log
+        '''
+    }
+}
 
         stage('Docker Build') {
             steps {
