@@ -30,6 +30,16 @@ pipeline {
             }
         }
 
+
+        stage('AI Failure Test') {
+    steps {
+        sh '''
+            echo "Intentionally creating a failure to test AI..."
+            exit 1
+        '''
+    }
+}
+
         stage('Docker Build') {
             steps {
                 sh '''
