@@ -89,7 +89,7 @@ pipeline {
 
                         docker run -d \
                             --name ${CONTAINER_NAME} \
-                            -p 8080:3000 \
+                            -p 8081:3000 \
                             ${IMAGE_NAME}:${version}
                     """
                 }
