@@ -33,6 +33,14 @@ pipeline {
             }
         }
 
+                stage('Manual Approval') {
+            steps {
+                input message: 'Do you want to deploy to production?',
+                      ok: 'Approve'
+            }
+        }
+
+
         stage('Deploy') {
             steps {
                 sh '''
